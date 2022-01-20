@@ -18,8 +18,8 @@ module.exports.register = (req, res, next) => {
     password: generateHash(req.body.password),
   })
     .save()
-    .then((_) => {
-      res.sendStatus(201);
+    .then((user) => {
+      res.status(201).json(user);
     })
     .catch((_) => {
       res.sendStatus(500);

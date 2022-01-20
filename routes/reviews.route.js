@@ -6,8 +6,8 @@ router.get("/", review.findAll);
 router.post("/", review.create);
 
 //next version
-router.get("/:id", review.findOne);
-router.patch("/:id", review.update);
-router.delete("/:id", review.delete);
+// router.get("/:id", review.findOne);
+// router.patch("/:id", review.update);
+// router.delete("/:id", review.delete);
 
 module.exports = router;
