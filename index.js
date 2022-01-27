@@ -7,6 +7,7 @@ const { mongoURI } = require("./config/keys");
 
 // Models
 require("./models/User.model");
+require("./models/movie.model");
 require("./models/Review.model");
 
 // Routes

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Review = mongoose.model("Review");
+const Movie = mongoose.model("Movie");
 
 module.exports.findAll = async (req, res, next) => {
     try{
@@ -14,7 +15,12 @@ module.exports.findAll = async (req, res, next) => {
 module.exports.create = async (req, res, next) => {
     try{
         const movieId = req.query.movieId;
-        
+        const movie = await Movie.findById(movieId).exec();
+        if (movie === null) {
+            res.status(400).json({ error: 'Movie does not exist' })
+            return
+        }
+
         await new Review({
             movieId: movieId,
             reviewer: req.body.reviewer,

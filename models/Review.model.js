@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const reviewSchema = new Schema({
-  movieId: Number,
+  movieId: String,
   reviewer: String,
   rating: Number,
   review: String
