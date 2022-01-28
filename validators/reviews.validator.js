@@ -14,7 +14,7 @@ const reviewSchema = Joi.object({
     .required(),
   review: Joi.string()
     .required()
-    .max(50),
+    .max(250),
 })
 
 module.exports = async (req, res, next) => {
