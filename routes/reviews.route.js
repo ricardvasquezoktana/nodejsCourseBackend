@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const review = require("../controllers/review.controller");
+const validaterReview = require("../validators/reviews.validator");
 
-router.get("/", review.findAll);
-router.post("/", review.create);
+router.get("/findAll", review.findAll);
+router.post("/create", validaterReview, review.create);
 
 //next version
 // router.get("/:id", review.findOne);
