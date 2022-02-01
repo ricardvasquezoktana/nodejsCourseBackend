@@ -6,4 +6,5 @@ const movieSchema = new Schema({
   username: String,
 });
 
+
 mongoose.model("Movie", movieSchema);
