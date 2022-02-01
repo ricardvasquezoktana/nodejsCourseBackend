@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
-const title = Joi.string().alphanum();
-const username = Joi.string().alphanum();
+const title = Joi.string().min(10);
+const username = Joi.string().min(5);
 const id = Joi.string().alphanum().length(24);
 
 const createMovieValidator = async (req, res, next) => {
@@ -42,10 +42,9 @@ const updateMovieValidator = async (req, res, next) => {
       title,
       username,
     });
-    const { title, username } = req.body;
     const value = await movieSchema.validateAsync({
-      title,
-      username,
+      title: req.body.title,
+      username: req.body.username,
     });
     next();
   } catch (error) {

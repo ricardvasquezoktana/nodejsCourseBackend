@@ -46,9 +46,12 @@ module.exports.findOne = async (req, res, next) => {
 };
 module.exports.update = async (req, res, next) => {
   try {
-    const { _id: id } = req.params;
-    const changes = req.body;
-    const movie = await Movie.updateOne({}, ...changes);
+    const { id } = req.params;
+    const filter = { _id: id };
+    const update = req.body;
+    console.log({ update });
+    const movie = await Movie.findOneAndUpdate(filter, ...update);
+    console.log({ movie });
     res.status(200).json({ movie });
   } catch (error) {
     res.sendStatus(500);
@@ -56,7 +59,7 @@ module.exports.update = async (req, res, next) => {
 };
 module.exports.delete = async (req, res, next) => {
   try {
-    const { _id: id } = req.params;
+    const { id } = req.params;
     const response = await Movie.deleteOne({ _id: id });
     if (response.deletedCount > 0) {
       res.status(200).json({ success: "OK", message: "Movie deleted", id });
