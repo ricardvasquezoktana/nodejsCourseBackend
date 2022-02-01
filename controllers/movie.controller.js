@@ -47,11 +47,10 @@ module.exports.findOne = async (req, res, next) => {
 module.exports.update = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const filter = { _id: id };
     const update = req.body;
-    console.log({ update });
-    const movie = await Movie.findOneAndUpdate(filter, ...update);
-    console.log({ movie });
+    const movie = await Movie.findOneAndUpdate(id, update, {
+      returnOriginal: false,
+    });
     res.status(200).json({ movie });
   } catch (error) {
     res.sendStatus(500);
