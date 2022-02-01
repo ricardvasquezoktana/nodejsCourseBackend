@@ -12,7 +12,7 @@ module.exports.findAll = async (req, res, next) => {
 };
 module.exports.create = async (req, res, next) => {
   try {
-    const { title, username, rating, review } = req.body;
+    const { title, username } = req.body;
     const movie = await Movie.findOne({
       title,
     }).exec();
@@ -26,7 +26,7 @@ module.exports.create = async (req, res, next) => {
     }).save();
     res.status(201).json({ newMovie });
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500).json({ error });
   }
 };
 module.exports.findOne = async (req, res, next) => {

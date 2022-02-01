@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const title = Joi.string().min(10);
+const title = Joi.string().min(5);
 const username = Joi.string().min(5);
 const id = Joi.string().alphanum().length(24);
 
