@@ -10,13 +10,18 @@ const createMovieValidator = async (req, res, next) => {
       title: title.required(),
       username: username.required(),
     });
-    const value = await movieSchema.validateAsync({
-      title: req.body.title,
-      username: req.body.username,
-    });
+    const value = await movieSchema.validateAsync(
+      {
+        title: req.body.title,
+        username: req.body.username,
+      },
+      { abortEarly: false }
+    );
+
     next();
   } catch (error) {
-    res.status(400).json({ error: error.details[0].message });
+    const errors = error.details.map((detail) => detail.message);
+    res.status(400).json({ errors });
   }
 };
 
@@ -28,10 +33,8 @@ const getMovieValidator = async (req, res, next) => {
     const value = await movieSchema.validateAsync({
       id: req.params.id,
     });
-    console.log({ value });
     next();
   } catch (error) {
-    console.log({ error });
     res.status(400).json({ error: error.details[0].message });
   }
 };
@@ -42,13 +45,17 @@ const updateMovieValidator = async (req, res, next) => {
       title,
       username,
     });
-    const value = await movieSchema.validateAsync({
-      title: req.body.title,
-      username: req.body.username,
-    });
+    const value = await movieSchema.validateAsync(
+      {
+        title: req.body.title,
+        username: req.body.username,
+      },
+      { abortEarly: false }
+    );
     next();
   } catch (error) {
-    res.status(400).json({ error: error.details[0].message });
+    const errors = error.details.map((detail) => detail.message);
+    res.status(400).json({ errors });
   }
 };
 
