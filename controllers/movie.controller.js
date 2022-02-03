@@ -4,7 +4,6 @@ const Movie = mongoose.model("Movie");
 module.exports.findAll = async (req, res, next) => {
   try {
     const movies = await Movie.find();
-    console.log({ movies });
     res.status(200).json({ movies });
   } catch (error) {
     res.sendStatus(500);
