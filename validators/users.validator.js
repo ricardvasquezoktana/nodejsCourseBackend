@@ -13,20 +13,24 @@ const userSchema = Joi.object({
     .required(),
   repeatPassword: Joi.ref('password'),
 })
-.with('password', 'repeatPassword');
+  .with('password', 'repeatPassword');
 
 module.exports = async (req, res, next) => {
   try {
-    const value = await userSchema.validateAsync({
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      email: req.body.email,
-      password: req.body.password,
-      repeatPassword: req.body.repeatPassword,
-    });
+    const value = await userSchema.validateAsync(
+      {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: req.body.password,
+        repeatPassword: req.body.repeatPassword,
+      },
+      { abortEarly: false }
+    );
     next();
   }
   catch (error) {
-    res.status(400).json({ error: error.details[0].message });
+    const errors = error.details.map((detail) => detail.message);
+    res.status(400).json({ errors });
   }
 };
