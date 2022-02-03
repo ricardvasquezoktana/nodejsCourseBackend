@@ -5,7 +5,6 @@ const reviewSchema = Joi.object({
     .alphanum()
     .required(),
   reviewer: Joi.string()
-    .alphanum()
     .required(),
   rating: Joi.number()
     .integer()
