@@ -31,9 +31,9 @@ module.exports.create = async (req, res, next) => {
 };
 module.exports.findOne = async (req, res, next) => {
   try {
-    const { _id: id } = req.params;
+    const { id } = req.params;
     const movie = await Movie.findOne({
-      id,
+      _id: mongoose.Types.ObjectId(id),
     }).exec();
     if (!movie) {
       res.status(404).json({ error: "Movie not found" });
