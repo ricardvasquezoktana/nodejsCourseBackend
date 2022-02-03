@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const mongoose = require("mongoose");
 
 const reviewSchema = Joi.object({
   movieId: Joi.string()
@@ -18,6 +19,9 @@ const reviewSchema = Joi.object({
 
 module.exports = async (req, res, next) => {
   try {
+    // Checking if movieId is valid before using findById, otherwise this method will return error.
+    const isValid = mongoose.Types.ObjectId.isValid(req.query.movieId);
+    if(!isValid) throw new Error("MovieID is not valid");
     const value = await reviewSchema.validateAsync({
       movieId: req.query.movieId,
       reviewer: req.body.reviewer,
@@ -27,6 +31,10 @@ module.exports = async (req, res, next) => {
     next();
   }
   catch (error) {
-    res.status(400).json({ error: error.details[0].message });
+    if(error instanceof Joi.ValidationError){
+      res.status(400).json({ error: error.details[0].message });
+    }else{
+      res.status(400).json({ error: error.message });
+    }
   }
 };
