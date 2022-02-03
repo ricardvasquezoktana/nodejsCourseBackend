@@ -15,7 +15,7 @@ module.exports.findAll = async (req, res, next) => {
 module.exports.create = async (req, res, next) => {
     try{
         const movieId = req.query.movieId;
-        const movie = await Movie.find({ _id:movieId}).exec();
+        const movie = await Movie.findById(mongoose.Types.ObjectId(movieId)).exec();
         if (movie === null) {
             res.status(400).json({ error: 'Movie does not exist' })
             return
