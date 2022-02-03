@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const mongoose = require("mongoose");
 
 const title = Joi.string().min(5);
 const username = Joi.string().min(5);
@@ -33,9 +34,17 @@ const getMovieValidator = async (req, res, next) => {
     const value = await movieSchema.validateAsync({
       id: req.params.id,
     });
+    const isValidId = mongoose.Types.ObjectId.isValid(req.params.id);
+    if (!isValidId) {
+      throw new Error("Id is not valid");
+    }
     next();
   } catch (error) {
-    res.status(400).json({ error: error.details[0].message });
+    if (error instanceof Joi.ValidationError) {
+      res.status(400).json({ error: error.details[0].message });
+    } else {
+      res.status(400).json({ error: error.message });
+    }
   }
 };
 
@@ -52,10 +61,18 @@ const updateMovieValidator = async (req, res, next) => {
       },
       { abortEarly: false }
     );
+    const isValidId = mongoose.Types.ObjectId.isValid(req.params.id);
+    if (!isValidId) {
+      throw new Error("Id is not valid");
+    }
     next();
   } catch (error) {
-    const errors = error.details.map((detail) => detail.message);
-    res.status(400).json({ errors });
+    if (error instanceof Joi.ValidationError) {
+      const errors = error.details.map((detail) => detail.message);
+      res.status(400).json({ errors });
+    } else {
+      res.status(400).json({ error: error.message });
+    }
   }
 };
 
@@ -67,9 +84,17 @@ const deleteMovieValidator = async (req, res, next) => {
     const value = await movieSchema.validateAsync({
       id: req.params.id,
     });
+    const isValidId = mongoose.Types.ObjectId.isValid(req.params.id);
+    if (!isValidId) {
+      throw new Error("Id is not valid");
+    }
     next();
   } catch (error) {
-    res.status(400).json({ error: error.details[0].message });
+    if (error instanceof Joi.ValidationError) {
+      res.status(400).json({ error: error.details[0].message });
+    } else {
+      res.status(400).json({ error: error.message });
+    }
   }
 };
 
