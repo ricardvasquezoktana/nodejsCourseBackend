@@ -24,7 +24,7 @@ module.exports.create = async (req, res, next) => {
       title,
       username,
     }).save();
-    res.status(201).json({ newMovie });
+    res.status(201).json(newMovie);
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -38,7 +38,7 @@ module.exports.findOne = async (req, res, next) => {
       res.status(404).json({ message: "Movie not found" });
       return;
     }
-    res.status(200).json({ movie });
+    res.status(200).json(movie);
   } catch (error) {
     res.sendStatus(500);
   }
