@@ -1,6 +1,7 @@
 // Dependencies
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 
 const { mongoURI } = require("./config/keys");
@@ -19,6 +20,9 @@ mongoose.Promise = global.Promise;
 mongoose.connect(mongoURI, { useNewUrlParser: true });
 const app = express();
 app.use(express.json());
+app.use(cors({
+    origin: "*"
+}));
 
 // Server Routes
 routerApi(app);
